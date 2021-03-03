@@ -5,7 +5,6 @@ module.exports = {
   execute(message, args) {
     //get the prune amount based off of the number given as the first argument
     const amount = parseInt(args[0]) + 1
-    console.log(amount)
     //if amount is not a number...
     if (isNaN(amount)) {
       //reply with "that doesn't seem to be a valid number."

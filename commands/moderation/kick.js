@@ -1,6 +1,7 @@
 module.exports = {
     name: 'kick',
     description: 'attempt to kick the mentioned user (in development)',
+    guildOnly: true,
     execute(message, args) {
       //grab the "first" mentioned user from the message
       //this will return a 'User' object, just like `message.author`
