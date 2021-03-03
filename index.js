@@ -64,15 +64,28 @@ client.on('message', (message) => {
     return message.reply("I can't execute that command inside DMs!")
   }
 
-  if (command.args && !args.length) {
-    if (command.args && !args.length) {
-      let reply = `You didn't provide any arguments, ${message.author}!`
-      if (command.usage) {
-        reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``
-      }
-
-      return message.channel.send(reply)
+  //if command has permission restrictions...
+  if (command.permissions) {
+    //set authorPerms to the channel permissions for that author.
+    const authorPerms = message.channel.permissionsFor(message.author)
+    //if no permissions, or the author doesn't have the command permissions...
+    if (!authorPerms || !authorPerms.has(command.permissions)) {
+      //reply with "I can't let you do that {author}"
+      return message.send(`I can't let you do that ${message.author}`)
     }
+  }
+
+  //if the command requires arguments, and there are none...
+  if (command.args && !args.length) {
+    //set reply to "You didn't provide any arguments, {author}"
+    let reply = `You didn't provide any arguments, ${message.author}!`
+    //if command has outlined usage...
+    if (command.usage) {
+      //set reply to previous PLUS "\nThe proper usage would be {prefix command usage}"
+      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``
+    }
+    //return as message to channel reply
+    return message.channel.send(reply)
   }
 
   //if Cooldowns DOES NOT have an entry for the command being used...
