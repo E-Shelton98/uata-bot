@@ -44,30 +44,16 @@ client.on('message', (message) => {
   //set constant command to be the args shifted, and set toLowerCase to ensure matching.
   const command = args.shift().toLowerCase()
 
-  //if the command was "ping"...
-  if (command === 'ping') {
-    //send back "Pong!" to the channel the message was sent in
-    client.commands.get('ping').execute(message, args)
-  }
-  //if the command was "server"...
-  else if (command === 'server') {
-    //reply with the server's name and total members
-    client.commands.get('server').execute(message, args)
-  }
-  //if the command was "kick"...
-  else if (command === 'kick') {
-    //attempt to kick the mentioned person (in development)
-    client.commands.get('kick').execute(message, args)
-  }
-  //if the command was "avatar"...
-  else if (command === 'avatar') {
-    //display senders or mentions avatar's
-    client.commands.get('avatar').execute(message, args)
-  }
-  //if the command was "prune"...
-  else if (command === 'prune') {
-    //prune between 2 and 100 messages if allowed
-    client.commands.get('prune').execute(message, args)
+  //if the client DOES NOT have that command, exit.
+  if (!client.commands.has(command)) return
+
+  //if the command does exist, execute it, and pass the message and args to the execution...
+  try {
+    client.commands.get(command).execute(message, args)
+  } catch (error) {
+    //if there is an error when executing, log the error, and reply "there was an error trying to execute that command"
+    console.error(error)
+    message.reply('there was an error trying to execute that command!')
   }
 })
 
