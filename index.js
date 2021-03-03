@@ -50,11 +50,15 @@ client.on('message', (message) => {
   //set constant commandName to be the args shifted, and set toLowerCase to ensure matching.
   const commandName = args.shift().toLowerCase()
 
-  //if the client DOES NOT have that command, exit.
-  if (!client.commands.has(commandName)) return
+  //set command to commandName or search command aliases for commandName
+  const command =
+    client.commands.get(commandName) ||
+    client.commands.find(
+      (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+    )
 
-  //set const command to equal the client command.
-  const command = client.commands.get(commandName)
+  //if command does not exist, exit.
+  if (!command) return
 
   if (command.guildOnly && message.channel.type === 'dm') {
     return message.reply("I can't execute that command inside DMs!")

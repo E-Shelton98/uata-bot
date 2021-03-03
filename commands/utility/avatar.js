@@ -1,5 +1,6 @@
 module.exports = {
   name: 'avatar',
+  aliases: ['icon', 'pfp'],
   description: 'display avatar of message sender/or mentioned users.',
   execute(message, args) {
     //if no users are mentioned display command sender's avatar.
