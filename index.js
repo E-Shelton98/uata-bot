@@ -14,18 +14,23 @@ const { prefix } = require('./config.json')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
 
-//retrieve command files, filter for only those that end with .js file type.
-const commandFiles = fs
-  .readdirSync('./commands')
-  .filter((file) => file.endsWith('.js'))
+//retrieve command folders
+const commandFolders = fs.readdirSync('./commands')
+//loop through command folders...
+for (const folder of commandFolders) {
+  //retrieve command files, filter for only those that end with .js file type.
+  const commandFiles = fs
+    .readdirSync(`./commands/${folder}`)
+    .filter((file) => file.endsWith('.js'))
 
-//loop through commandFiles...
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`)
+  //loop through commandFiles...
+  for (const file of commandFiles) {
+    const command = require(`./commands/${folder}/${file}`)
 
-  //set a new item in the Collection
-  //with the key as the command name and the value as the exported module
-  client.commands.set(command.name, command)
+    //set a new item in the Collection
+    //with the key as the command name and the value as the exported module
+    client.commands.set(command.name, command)
+  }
 }
 
 //when the client is ready, run this code
@@ -41,15 +46,24 @@ client.on('message', (message) => {
 
   //set constant args to be the message content minus the prefix, and split by spacing.
   const args = message.content.slice(prefix.length).trim().split(/ +/)
-  //set constant command to be the args shifted, and set toLowerCase to ensure matching.
-  const command = args.shift().toLowerCase()
+  //set constant commandName to be the args shifted, and set toLowerCase to ensure matching.
+  const commandName = args.shift().toLowerCase()
 
   //if the client DOES NOT have that command, exit.
-  if (!client.commands.has(command)) return
+  if (!client.commands.has(commandName)) return
+
+  //set const command to equal the client command.
+  const command = client.commands.get(commandName)
+
+  if (command.args && !args.length) {
+    return message.channel.send(
+      `This command requires arguments, ${message.author}!`
+    )
+  }
 
   //if the command does exist, execute it, and pass the message and args to the execution...
   try {
-    client.commands.get(command).execute(message, args)
+    command.execute(message, args)
   } catch (error) {
     //if there is an error when executing, log the error, and reply "there was an error trying to execute that command"
     console.error(error)
