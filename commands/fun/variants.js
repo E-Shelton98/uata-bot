@@ -8,17 +8,12 @@ const fetch = require('node-fetch')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = {
-  name: 'cover',
+  name: 'variants',
   cooldown: '3',
   description: 'call the marvel API for the cover of a comic',
   usage: 'issue title',
   guildOnly: true,
   execute(message, args) {
-    //trim method to ensure information does cause an error for being too long on the embed
-    function trim(str, max) {
-      return str.length > max ? `${str.slice(0, max - 3)}...` : str
-    }
-
     //set marvel public api key
     const MARVEL_PUBLIC_KEY = 'a82e67e91c1cb1e3e3827c0b70da6aac'
 
@@ -32,20 +27,17 @@ module.exports = {
     var stringToHash = ts + MARVEL_PRIVATE_KEY + MARVEL_PUBLIC_KEY
     var hash = md5(stringToHash)
 
-    //if searching for a specific comic issue...
-
     //set comicIssue
-    let comicIssue = args[0]
-
+    let comicIssue = args[args.length - 1]
     //set comicTitle
-    let comicTitle = args.splice(1)
+    let comicTitle = args.slice(0, -1)
     comicTitle = comicTitle.join('%20')
 
     marvelFetchCover(comicTitle, comicIssue)
 
     async function marvelFetchCover(comicTitle, comicIssue) {
       //set url to base url for comic
-      let url = `http://gateway.marvel.com/v1/public/comics?title=${comicTitle}&issueNumber=${comicIssue}&ts=${ts}`
+      let url = `http://gateway.marvel.com/v1/public/comics?noVariants=false&title=${comicTitle}&issueNumber=${comicIssue}&ts=${ts}`
 
       try {
         const response = await fetch(
@@ -54,12 +46,17 @@ module.exports = {
 
         const data = await response.json()
 
-        const comicDetailURL = data.data.results[0].urls[0].url
-        const comicImage = `${data.data.results[0].images[0].path}.${data.data.results[0].images[0].extension}`
+        const comicDetailURL =
+          data.data.results[data.data.results.length - 1].urls[0].url
+        const comicImage = `${
+          data.data.results[data.data.results.length - 1].images[0].path
+        }.${
+          data.data.results[data.data.results.length - 1].images[0].extension
+        }`
 
         const embed = new MessageEmbed()
           .setColor('#FF0000')
-          .setTitle(data.data.results[0].title)
+          .setTitle(data.data.results[data.data.results.length - 1].title)
           .setURL(comicDetailURL)
           .setImage(comicImage)
 
