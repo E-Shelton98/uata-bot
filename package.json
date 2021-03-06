@@ -1,12 +1,11 @@
 {
-  "name": "discopoly",
-  "version": "0.0.1",
+  "name": "uatu-bot",
+  "version": "1.0.0",
   "description": "A Monopoly Discord Bot",
   "main": "index.js",
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "jsdom": "^16.4.0",
     "md5": "^2.3.0",
     "node-fetch": "^2.6.1"
   },

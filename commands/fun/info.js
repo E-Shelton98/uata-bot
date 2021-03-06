@@ -4,9 +4,6 @@ var md5 = require('md5')
 require('dotenv').config()
 //require node-fetch module for fetch requests
 const fetch = require('node-fetch')
-//require jsdom for scraping
-const jsdom = require('jsdom')
-const { JSDOM } = jsdom
 //require MessageEmbed from discord.js module
 const { MessageEmbed } = require('discord.js')
 
