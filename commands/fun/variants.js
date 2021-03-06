@@ -9,7 +9,7 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = {
   name: 'variants',
-  cooldown: '3',
+  cooldown: '1',
   description: 'call the marvel API for the cover of a comic',
   usage: 'issue title',
   guildOnly: true,
@@ -37,26 +37,47 @@ module.exports = {
 
     async function marvelFetchCover(comicTitle, comicIssue) {
       //set url to base url for comic
-      let url = `http://gateway.marvel.com/v1/public/comics?noVariants=false&title=${comicTitle}&issueNumber=${comicIssue}&ts=${ts}`
+      let url = `http://gateway.marvel.com/v1/public/comics?title=${comicTitle}&issueNumber=${comicIssue}&ts=${ts}`
 
       try {
         const response = await fetch(
           `${url + '&apikey=' + MARVEL_PUBLIC_KEY + '&hash=' + hash}`
         )
 
-        const data = await response.json()
+        let data = await response.json()
+        let filteredData = []
 
-        const comicDetailURL =
-          data.data.results[data.data.results.length - 1].urls[0].url
-        const comicImage = `${
-          data.data.results[data.data.results.length - 1].images[0].path
-        }.${
-          data.data.results[data.data.results.length - 1].images[0].extension
-        }`
+        data = data.data.results
 
-        const embed = new MessageEmbed()
+        for (obj of data) {
+          if (obj.variantDescription !== '') {
+            filteredData.push(obj)
+          }
+        }
+
+        let randomVariant = Math.floor(Math.random() * filteredData.length - 1)
+
+        let safetyCounter = 0
+        while (filteredData[randomVariant] === undefined) {
+          randomVariant = Math.floor(Math.random() * filteredData.length - 1)
+          if (filteredData[randomVariant] === undefined) {
+            console.log(filteredData[randomVariant])
+            randomVariant = Math.floor(Math.random() * filteredData.length - 1)
+          }
+          safetyCounter += 1
+          if (safetyCounter > 5) {
+            return message.reply(
+              `I'm sorry, I can't find that in the database, perhaps its an incorrect spelling?`
+            )
+          }
+        }
+
+        const comicDetailURL = data[data.length - 1].urls[0].url
+        const comicImage = `${filteredData[randomVariant].images[0].path}.${filteredData[randomVariant].images[0].extension}`
+
+        let embed = new MessageEmbed()
           .setColor('#FF0000')
-          .setTitle(data.data.results[data.data.results.length - 1].title)
+          .setTitle(filteredData[randomVariant].title)
           .setURL(comicDetailURL)
           .setImage(comicImage)
 

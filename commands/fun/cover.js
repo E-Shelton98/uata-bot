@@ -8,7 +8,7 @@ const fetch = require('node-fetch')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = {
-  name: 'covers',
+  name: 'cover',
   cooldown: '3',
   description: 'call the marvel API for the cover of a comic',
   usage: 'issue title',
