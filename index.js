@@ -60,4 +60,4 @@ for (const folder of commandFolders) {
 //listen for messages in the server.
 
 //login to Discord with your app's token
-client.login(process.env.WANDA_TOKEN)
+client.login(process.env.UATA_TOKEN)
