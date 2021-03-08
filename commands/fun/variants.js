@@ -66,6 +66,7 @@ module.exports = {
           }
           safetyCounter += 1
           if (safetyCounter > 5) {
+            console.log(message)
             return message.reply(
               `I'm sorry, I can't find that in the database, perhaps its an incorrect spelling?`
             )
@@ -83,7 +84,7 @@ module.exports = {
 
         message.channel.send(embed)
       } catch (err) {
-        console.log(err)
+        console.log(message.content, err)
         return message.reply(
           `I'm sorry, I can't find that entry in the database.`
         )
