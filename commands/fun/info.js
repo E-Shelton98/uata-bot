@@ -10,8 +10,8 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
   name: 'info',
   cooldown: '1',
-  description: 'call the marvel API for information',
-  usage: `character name`,
+  description: 'get a short description of a character',
+  usage: `u! info [character name]`,
   guildOnly: true,
   execute(message, args) {
     //trim method to ensure information does cause an error for being too long on the embed
