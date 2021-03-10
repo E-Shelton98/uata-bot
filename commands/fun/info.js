@@ -1,8 +1,11 @@
 //require md5 module
 var md5 = require('md5')
-//require dotenv module
-require('dotenv').config()
-require('custom-env').env()
+if (process.env.NODE_ENV === 'development') {
+  //require custom-env for multiple .env files support
+  require('custom-env').env(true)
+  //require dotenv module
+  require('dotenv').config()
+}
 //require node-fetch module for fetch requests
 const fetch = require('node-fetch')
 //require MessageEmbed from discord.js module
