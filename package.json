@@ -6,7 +6,6 @@
   "dependencies": {
     "custom-env": "^2.0.1",
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0",
     "md5": "^2.3.0",
     "node-fetch": "^2.6.1"
   },
@@ -16,5 +15,8 @@
     "dev": "NODE_ENV=development node app.js"
   },
   "author": "Erik Shelton",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }

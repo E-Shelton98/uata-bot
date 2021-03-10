@@ -1,1 +1,1 @@
-worker: NODE_ENV=production node app.js
+worker: node app.js
