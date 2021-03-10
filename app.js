@@ -3,7 +3,7 @@ const fs = require('fs')
 
 //require dotenv module
 require('dotenv').config()
-
+require('custom-env').env()
 //require discord.js module
 const Discord = require('discord.js')
 
@@ -62,4 +62,4 @@ for (const folder of commandFolders) {
 //listen for messages in the server.
 
 //login to Discord with your app's token
-client.login(process.env.UATA_TOKEN)
+client.login(process.env.UATU_TOKEN)
