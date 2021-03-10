@@ -4,7 +4,6 @@
   "description": "A Monopoly Discord Bot",
   "main": "index.js",
   "dependencies": {
-    "custom-env": "^2.0.1",
     "discord.js": "^12.5.1",
     "md5": "^2.3.0",
     "node-fetch": "^2.6.1"
@@ -17,6 +16,7 @@
   "author": "Erik Shelton",
   "license": "ISC",
   "devDependencies": {
+    "custom-env": "^2.0.1",
     "dotenv": "^8.2.0"
   }
 }
