@@ -1,12 +1,12 @@
 if (process.env.NODE_ENV === 'development') {
   //require custom-env for multiple .env files support
   require('custom-env').env(true)
+  //require dotenv module
+  require('dotenv').config()
 }
 //require fs module
 const fs = require('fs')
 
-//require dotenv module
-require('dotenv').config()
 //require discord.js module
 const Discord = require('discord.js')
 
@@ -22,6 +22,7 @@ const finalConfig = { ...defaultConfig, ...environmentConfig }
 
 global.gConfig = finalConfig
 const prefix = gConfig.prefix
+
 ////////////////////////////////////////////////////////////////////
 
 //create a new Discord client
