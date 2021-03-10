@@ -1,9 +1,10 @@
+//require custom-env for multiple .env files support
+require('custom-env').env(true)
 //require fs module
 const fs = require('fs')
 
 //require dotenv module
 require('dotenv').config()
-require('custom-env').env(true)
 //require discord.js module
 const Discord = require('discord.js')
 
