@@ -1,5 +1,7 @@
-//require custom-env for multiple .env files support
-require('custom-env').env(true)
+if (process.env.NODE_ENV === 'development') {
+  //require custom-env for multiple .env files support
+  require('custom-env').env(true)
+}
 //require fs module
 const fs = require('fs')
 
