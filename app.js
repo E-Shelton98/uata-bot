@@ -3,12 +3,23 @@ const fs = require('fs')
 
 //require dotenv module
 require('dotenv').config()
-require('custom-env').env()
+require('custom-env').env(true)
 //require discord.js module
 const Discord = require('discord.js')
 
-//require config file and extrapolate prefix
-const { prefix } = require('./config.json')
+////////////////////////////////////////////////////////////////////
+//https://codeburst.io/node-js-best-practices-smarter-ways-to-manage-config-files-and-variables-893eef56cbef
+
+//module variables
+const config = require('./config.json')
+const defaultConfig = config.development
+const environment = process.env.NODE_ENV
+const environmentConfig = config[environment]
+const finalConfig = { ...defaultConfig, ...environmentConfig }
+
+global.gConfig = finalConfig
+const prefix = gConfig.prefix
+////////////////////////////////////////////////////////////////////
 
 //create a new Discord client
 const client = new Discord.Client()
@@ -18,7 +29,6 @@ const cooldowns = new Discord.Collection()
 client.commands = new Discord.Collection()
 
 ///////////////////////////////////////////////////////////////////////////////
-
 //retrieve event files
 const eventFiles = fs
   .readdirSync('./events')
