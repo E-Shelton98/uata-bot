@@ -18,6 +18,7 @@ module.exports = {
   usage: `u! 1st [character name]`,
   guildOnly: true,
   execute(message, args) {
+    //This command is very slow right now, will need to be reworked in the future, possibly going to make my own API.
     //set marvel public api key
     const MARVEL_PUBLIC_KEY = 'a82e67e91c1cb1e3e3827c0b70da6aac'
 
