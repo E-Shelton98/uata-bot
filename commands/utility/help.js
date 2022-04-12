@@ -60,7 +60,7 @@ module.exports = {
         data.push(`**Description:** ${command.description}`)
       //if command has an outlined usage, push usage into data array
       if (command.usage)
-        data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`)
+        data.push(`**Usage:** ${command.usage}`)
 
       //push command's cooldown, or global cooldown into data array
       data.push(`**Cooldown:**: ${command.cooldown || 3} second(s)`)
