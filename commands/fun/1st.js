@@ -15,7 +15,7 @@ module.exports = {
   name: '1st',
   cooldown: '1',
   description: 'get a characters first comic appearance',
-  usage: `u! 1st [character name]`,
+  usage: 'u! 1st [character name]',
   guildOnly: true,
   execute(message, args) {
     //This command is very slow right now, will need to be reworked in the future, possibly going to make my own API.
