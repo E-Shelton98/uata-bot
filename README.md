@@ -1,10 +1,10 @@
-# Uata-Bot
+# Uatu-Bot
 
 Uata is a bot for Discord written using node.js that incorporates the Marvel API to pull information on characters and comics.
 
 ## Installation
 
-Below is a discord invite link to let Uata join your server.
+Below is a discord invite link to let Uatu join your server.
 
 https://discord.com/oauth2/authorize?client_id=816165859122217010&scope=bot&permissions=117760
 
